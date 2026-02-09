@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Biodata - {{ $pilgrim->name }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
