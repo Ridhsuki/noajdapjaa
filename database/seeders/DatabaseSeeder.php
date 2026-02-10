@@ -3,15 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Pilgrim;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         User::firstOrCreate(
@@ -23,9 +19,13 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        Pilgrim::factory(25)->create();
+        $this->call([
+            PartnerSeeder::class,
+            AgentSeeder::class,
+            PilgrimSeeder::class,
+        ]);
 
-        $this->command->info('Admin user created: admin@gmail.com / password');
-        $this->command->info('50 Dummy Pilgrims created.');
+        $this->command->info('Admin user created.');
+        $this->command->info('Dummy Partners, Agents, and Pilgrims seeded.');
     }
 }

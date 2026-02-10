@@ -15,6 +15,7 @@ class UpdatePilgrimRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'agent_id' => ['required', 'exists:agents,id'],
             'name' => ['required', 'string', 'max:255'],
             'passport_number' => [
                 'required',
@@ -28,7 +29,6 @@ class UpdatePilgrimRequest extends FormRequest
                 'max:50',
                 Rule::unique('pilgrims')->ignore($this->pilgrim)
             ],
-            'ppiu' => ['required', 'string', 'max:255'],
             'hotel_madinah_name' => ['nullable', 'string'],
             'hotel_madinah_check_in' => ['nullable', 'date'],
             'hotel_madinah_check_out' => ['nullable', 'date', 'after_or_equal:hotel_madinah_check_in'],

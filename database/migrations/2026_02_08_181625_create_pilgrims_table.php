@@ -12,13 +12,12 @@ return new class extends Migration {
     {
         Schema::create('pilgrims', function (Blueprint $table) {
             $table->id();
-
+            $table->foreignId('agent_id')->nullable()->constrained()->nullOnDelete();
             $table->uuid('uuid')->unique()->index();
 
             $table->string('name');
             $table->string('passport_number')->unique();
             $table->string('umrah_id')->unique();
-            $table->string('ppiu');
             $table->string('hotel_madinah_name')->nullable();
             $table->date('hotel_madinah_check_in')->nullable();
             $table->date('hotel_madinah_check_out')->nullable();

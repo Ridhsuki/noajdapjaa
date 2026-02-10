@@ -1,31 +1,47 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\PilgrimController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Public\ScanController;
+use App\Http\Controllers\Admin\AgentController;
+use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\PilgrimController;
 
-Route::get('/', function () {
-    return redirect()->route('login');
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::redirect('/', '/login');
+
+// ---------------------------
+// Public Routes (Scan QR)
+// ---------------------------
+Route::middleware('throttle:60,1')->group(function () {
+    Route::get('/scan/{pilgrim}', [ScanController::class, 'show'])
+        ->name('scan.show');
 });
 
-Route::middleware(['throttle:60,1'])->group(function () {
-    Route::get('/scan/{pilgrim}', [ScanController::class, 'show'])->name('scan.show');
-});
-
-Route::get('/dashboard', function () {
-    return redirect()->route('admin.pilgrims.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+// ---------------------------
+// Authenticated Routes
+// ---------------------------
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::prefix('profile')->name('profile.')->group(function () {
+        Route::get('/', [ProfileController::class, 'edit'])->name('edit');
+        Route::patch('/', [ProfileController::class, 'update'])->name('update');
+        Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+    });
+    Route::get('/dashboard', fn() => view('dashboard'))->name('dashboard');
 
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::resource('pilgrims', PilgrimController::class);
+        Route::resource('partners', PartnerController::class)->names('partners');
+        Route::resource('agents', AgentController::class)->names('agents');
+        Route::resource('pilgrims', PilgrimController::class)->names('pilgrims');
         Route::get('pilgrims/{pilgrim}/print', [PilgrimController::class, 'print'])
             ->name('pilgrims.print');
+        Route::post('pilgrims/bulk-print', [PilgrimController::class, 'bulkPrint'])
+            ->name('pilgrims.bulk-print');
     });
 });
 

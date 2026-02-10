@@ -77,7 +77,7 @@
 
                 <div>
                     <div class="label-text"><b>PPIU</b> (<span class="italic text-[0.75rem]">Travel Agent</span>) :
-                        <span class="text-black font-bold uppercase">{{ $pilgrim->ppiu }}</span>
+                        <span class="text-black font-bold uppercase">{{ $pilgrim->agent->name }}</span>
                     </div>
                 </div>
 

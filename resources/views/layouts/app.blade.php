@@ -38,6 +38,7 @@
             {{ $slot }}
         </main>
     </div>
+    @stack('scripts')
     @include('layouts.partials.swal')
 </body>
 

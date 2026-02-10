@@ -34,7 +34,7 @@
                         </div>
 
                         <h3 class="mt-4 text-xl font-bold text-gray-900 leading-tight">{{ $pilgrim->name }}</h3>
-                        <p class="text-sm text-emerald-600 font-medium">{{ $pilgrim->ppiu }}</p>
+                        <p class="text-sm text-emerald-600 font-medium">{{ $pilgrim->agent->name ?? '-' }}</p>
 
                         @if ($pilgrim->photo_path)
                             <a href="{{ asset('storage/' . $pilgrim->photo_path) }}" target="_blank"
@@ -114,7 +114,7 @@
 
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-medium text-gray-500">Travel Agent (PPIU)</dt>
-                                    <dd class="mt-1 text-base font-semibold text-gray-900">{{ $pilgrim->ppiu }}</dd>
+                                    <dd class="mt-1 text-base font-semibold text-gray-900">{{ $pilgrim->agent->name ?? '-' }}</dd>
                                 </div>
 
                             </dl>

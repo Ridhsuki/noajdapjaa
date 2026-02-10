@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Pilgrim extends Model
 {
@@ -15,10 +16,10 @@ class Pilgrim extends Model
      * photo_path WAJIB ada di sini agar tersimpan ke DB.
      */
     protected $fillable = [
+        'agent_id',
         'name',
         'passport_number',
         'umrah_id',
-        'ppiu',
         'hotel_madinah_name',
         'hotel_madinah_check_in',
         'hotel_madinah_check_out',
@@ -55,5 +56,10 @@ class Pilgrim extends Model
             'hotel_makkah_check_in' => 'date',
             'hotel_makkah_check_out' => 'date',
         ];
+    }
+
+    public function agent(): BelongsTo
+    {
+        return $this->belongsTo(Agent::class);
     }
 }

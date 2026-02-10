@@ -91,7 +91,7 @@
 
                     <div class="col-span-2">
                         <p class="text-[9px] text-gray-500 uppercase font-semibold">Agen Travel (PPIU)</p>
-                        <p class="text-sm font-bold">{{ $pilgrim->ppiu }}</p>
+                        <p class="text-sm font-bold">{{ $pilgrim->agent->name }}</p>
                     </div>
 
                     <div class="mb-6 col-span-2">

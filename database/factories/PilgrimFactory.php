@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Agent;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -26,12 +27,12 @@ class PilgrimFactory extends Factory
             : null;
 
         return [
+            'agent_id' => Agent::factory(),
             'uuid' => (string) Str::uuid(),
 
             'name' => fake('id_ID')->name(),
             'passport_number' => 'E' . fake()->unique()->numerify('#######'),
             'umrah_id' => fake()->unique()->numerify('###########'),
-            'ppiu' => fake()->company(),
 
             'hotel_madinah_name' => $madinahCheckIn ? fake()->city() . ' Hotel' : null,
             'hotel_madinah_check_in' => $madinahCheckIn?->format('Y-m-d'),

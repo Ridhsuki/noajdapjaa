@@ -47,10 +47,21 @@
                         </div>
 
                         <div class="md:col-span-2">
-                            <x-input-label for="ppiu" :value="__('Agen Travel (PPIU)')" />
-                            <x-text-input id="ppiu" class="block mt-1 w-full" type="text" name="ppiu"
-                                :value="old('ppiu', $pilgrim->ppiu)" required />
-                            <x-input-error :messages="$errors->get('ppiu')" class="mt-2" />
+                            <x-input-label for="agent_id" :value="__('Agen Travel (PPIU)')" />
+
+                            <select id="agent_id" name="agent_id"
+                                class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                required>
+                                <option value="" disabled>-- Pilih Agent Travel --</option>
+                                @foreach ($agents as $agent)
+                                    <option value="{{ $agent->id }}"
+                                        {{ (old('agent_id') ?? $pilgrim->agent_id) == $agent->id ? 'selected' : '' }}>
+                                        {{ $agent->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            <x-input-error :messages="$errors->get('agent_id')" class="mt-2" />
                         </div>
 
                         <div>
