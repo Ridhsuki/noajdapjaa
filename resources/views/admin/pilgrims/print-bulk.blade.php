@@ -10,35 +10,32 @@
 
         :root {
             --primary-red: #CE1126;
-            /* Merah Bendera */
             --primary-yellow: rgb(241, 199, 30);
-            /* Kuning Emas (agar terbaca di putih) */
-            --text-black: #000000;
+            --text-black: #000000
         }
 
         * {
             box-sizing: border-box;
             -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
+            print-color-adjust: exact !important
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Inter', sans-serif;
-            background: #e5e7eb;
+            background: #e5e7eb
         }
 
-        /* Setting Kertas A4 */
         @page {
             size: A4 portrait;
-            margin: 0;
+            margin: 0
         }
 
         .page {
             width: 210mm;
             height: 297mm;
-            background: white;
+            background: #fff;
             margin: 0 auto;
             padding: 10mm;
             display: grid;
@@ -46,13 +43,11 @@
             grid-template-rows: repeat(3, 1fr);
             gap: 5mm;
             page-break-after: always;
-            position: relative;
+            position: relative
         }
 
-        /* Container Kartu */
         .card {
             border: 2px dashed #d1d5db;
-            /* Garis potong halus */
             width: 100%;
             height: 100%;
             display: flex;
@@ -60,77 +55,64 @@
             overflow: hidden;
             position: relative;
             background-color: #fff;
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
-            /* Border halus */
+            box-shadow: 0 0 0 1px rgb(0 0 0 / .05)
         }
 
-        /* ====================
-           DESAIN DEPAN (FRONT)
-           ==================== */
         .card-front {
             display: flex;
             flex-direction: column;
             height: 100%;
             position: relative;
-
-            /* UPDATE BACKGROUND DISINI */
             background-image: url('{{ asset('assets/img/bg-card.png') }}');
             background-repeat: no-repeat;
             background-position: center center;
             background-size: 100% 100%;
-            /* Memaksa gambar pas memenuhi kartu */
-
-            /* Fallback color jika gambar gagal load */
             background-color: #fff;
-
-            /* PENTING: Agar background ikut ter-print */
             -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
+            print-color-adjust: exact !important
         }
 
-        /* 1. Header (Logos & Siskopatuh) */
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 2px 10px;
-            height: 50px;
+            height: 50px
         }
 
         .logo-kemenhaj {
             height: 30px;
             width: auto;
-            object-fit: contain;
+            object-fit: contain
         }
 
         .siskopatuh-title {
             font-size: 13px;
             font-weight: 800;
             color: var(--text-black);
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            letter-spacing: .5px;
+            text-transform: uppercase
         }
 
         .logo-agent {
             height: 30px;
             width: auto;
             max-width: 50px;
-            object-fit: contain;
+            object-fit: contain
         }
 
-        /* 2. Official Text Block */
         .official-text-area {
             text-align: center;
             padding: 5px 4px;
             line-height: 1;
-            margin-bottom: 5px;
+            margin-bottom: 5px
         }
 
         .text-indo {
             font-size: 8px;
             font-weight: 700;
             color: var(--text-black);
-            text-transform: uppercase;
+            text-transform: uppercase
         }
 
         .text-eng {
@@ -138,27 +120,24 @@
             font-weight: 600;
             color: var(--primary-yellow);
             font-style: italic;
-            margin-bottom: 2px;
+            margin-bottom: 2px
         }
 
-        /* 3. Photo Area */
         .photo-wrapper {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            /* padding-top: 1px; */
+            justify-content: flex-start
         }
 
         .pilgrim-photo {
             width: 90px;
             height: 110px;
             object-fit: cover;
-            background-color: #f3f4f6;
+            background-color: #f3f4f6
         }
 
-        /* 4. Details (Name, Passport, ID) */
         .pilgrim-name {
             font-size: 10px;
             font-weight: 800;
@@ -170,60 +149,51 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
-            overflow: hidden;
+            overflow: hidden
         }
 
         .pilgrim-passport {
             font-size: 9px;
             font-weight: 600;
             color: #374151;
-            margin-bottom: 1px;
+            margin-bottom: 1px
         }
 
         .pilgrim-id {
             padding-top: 2px;
             font-size: 7px;
             font-weight: 700;
-            color: var(--text-black);
+            color: var(--text-black)
         }
 
-        /* 5. QR Code */
         .qr-wrapper {
             margin-bottom: 1px;
-            /* padding: 2px; */
-            background: white;
+            background: #fff
         }
 
-        /* 6. Footer (Direktorat Jenderal) */
         .card-footer {
-            color: black;
+            color: #000;
             text-align: center;
             padding: 6px 5px;
-            /* Hapus margin-top: auto agar footer tidak nempel bawah */
-            /* margin-top: auto; */
             display: flex;
             flex-direction: column;
             justify-content: center;
-            min-height: 35px;
+            min-height: 35px
         }
 
         .footer-text-indo {
             font-size: 6px;
             font-weight: 800;
             text-transform: uppercase;
-            line-height: 1.2;
+            line-height: 1.2
         }
 
         .footer-text-eng {
             font-size: 5px;
             font-weight: 400;
             font-style: italic;
-            opacity: 0.9;
+            opacity: .9
         }
-
-        /* ====================
-   DESAIN BELAKANG (MATCH IMAGE)
-   ==================== */
 
         .card-back {
             padding: 14px 12px;
@@ -231,124 +201,116 @@
             background: #fff;
             display: flex;
             flex-direction: column;
-            color: #000;
+            color: #000
         }
 
-        /* PPIU Title */
         .back-ppiu-name {
             text-align: center;
             font-size: 13px;
             font-weight: 800;
             text-transform: uppercase;
-            margin-bottom: 4px;
+            margin-bottom: 4px
         }
 
-        /* Address */
         .back-address {
             text-align: center;
             font-size: 9px;
             line-height: 1.3;
-            margin-bottom: 10px;
+            margin-bottom: 10px
         }
 
-        /* Two Column Section */
         .back-two-col {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 10px
         }
 
         .back-label {
             font-size: 8px;
             font-weight: 500;
-            margin-bottom: 2px;
+            margin-bottom: 2px
         }
 
         .back-value {
             font-size: 10px;
-            font-weight: 700;
+            font-weight: 700
         }
 
         .back-phone {
             font-size: 9px;
-            font-weight: 500;
+            font-weight: 500
         }
 
-        /* Divider text */
         .back-divider {
             text-align: center;
             font-size: 9px;
             font-weight: 700;
-            margin: 8px 0 6px;
+            margin: 8px 0 6px
         }
 
-        /* Representative Office */
         .back-office-title {
             text-align: center;
             font-size: 10px;
             font-weight: 800;
             margin-top: auto;
-            margin-bottom: 4px;
+            margin-bottom: 4px
         }
 
         .back-office-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
-            text-align: center;
+            text-align: center
         }
 
         .back-office-city {
             font-size: 10px;
             font-weight: 800;
-            margin-bottom: 2px;
+            margin-bottom: 2px
         }
 
         .back-office-address {
             font-size: 8px;
-            line-height: 1.3;
+            line-height: 1.3
         }
 
-        /* Helpers */
         .no-print {
             text-align: center;
-            margin: 20px 0;
+            margin: 20px 0
         }
 
         .btn-print {
             background: var(--primary-red);
-            color: white;
+            color: #fff;
             padding: 10px 20px;
             border: none;
             border-radius: 6px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 4px rgb(0 0 0 / .2)
         }
 
         .btn-print:hover {
-            background-color: #b91c1c;
+            background-color: #b91c1c
         }
 
         @media print {
             .no-print {
-                display: none;
+                display: none
             }
 
             body {
-                background: white;
+                background: #fff
             }
 
             .card {
-                border: none;
+                border: none
             }
 
-            /* Opsional: Hilangkan border saat print jika sudah ada cutter guide */
-            /* Force background colors */
             .card-footer {
-                -webkit-print-color-adjust: exact;
+                -webkit-print-color-adjust: exact
             }
         }
     </style>
@@ -437,7 +399,6 @@
                 <div class="card">
                     <div class="card-back">
 
-                        {{-- PPIU --}}
                         <div class="back-ppiu-name">
                             {{ $pilgrim->agent->name ?? 'PPIU TRAVEL' }}
                         </div>
@@ -446,7 +407,6 @@
                             {{ $pilgrim->agent->address ?? '-' }}
                         </div>
 
-                        {{-- Leader & Muthawif --}}
                         <div class="back-two-col">
                             <div>
                                 <div class="back-label">Tour Leader</div>
@@ -461,7 +421,6 @@
                             </div>
                         </div>
 
-                        {{-- Hotel --}}
                         <div class="back-two-col">
                             <div>
                                 <div class="back-label">Hotel Makkah</div>
@@ -474,7 +433,6 @@
                             </div>
                         </div>
 
-                        {{-- Representative --}}
                         <div class="back-divider">
                             {{ $pilgrim->agent->partner->name ?? 'KANTOR PERWAKILAN' }}
                         </div>
