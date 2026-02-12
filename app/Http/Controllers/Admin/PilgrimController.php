@@ -26,7 +26,7 @@ class PilgrimController extends Controller
 
     public function store(StorePilgrimRequest $request)
     {
-        Pilgrim::create($request->validated());
+        $data = $request->validated();
 
         if ($request->hasFile('photo')) {
             $data['photo_path'] = $request->file('photo')->store('pilgrims', 'public');
@@ -52,7 +52,8 @@ class PilgrimController extends Controller
 
     public function update(UpdatePilgrimRequest $request, Pilgrim $pilgrim)
     {
-        $pilgrim->update($request->validated());
+        $data = $request->validated();
+
         if ($request->hasFile('photo')) {
             if ($pilgrim->photo_path && Storage::disk('public')->exists($pilgrim->photo_path)) {
                 Storage::disk('public')->delete($pilgrim->photo_path);
