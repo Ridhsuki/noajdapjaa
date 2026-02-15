@@ -8,14 +8,50 @@ use App\Models\Pilgrim;
 use App\Http\Requests\StorePilgrimRequest;
 use App\Http\Requests\UpdatePilgrimRequest;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class PilgrimController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pilgrims = Pilgrim::latest()->paginate(10);
-        return view('admin.pilgrims.index', compact('pilgrims'));
+        $query = Pilgrim::with('agent');
+
+        $query->when($request->filled('search'), function ($q) use ($request) {
+            $search = $request->input('search');
+            $q->where(function ($sub) use ($search) {
+                $sub->where('name', 'like', "%{$search}%")
+                    ->orWhere('passport_number', 'like', "%{$search}%")
+                    ->orWhere('umrah_id', 'like', "%{$search}%");
+            });
+        });
+
+        $query->when($request->filled('agent_id') && $request->agent_id !== 'all', function ($q) use ($request) {
+            $q->where('agent_id', $request->agent_id);
+        });
+
+        $sort = $request->input('sort', 'latest');
+        switch ($sort) {
+            case 'name_asc':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('name', 'desc');
+                break;
+            case 'oldest':
+                $query->oldest();
+                break;
+            case 'latest':
+            default:
+                $query->latest();
+                break;
+        }
+
+        $pilgrims = $query->paginate(10)->withQueryString();
+
+        $agents = Agent::select('id', 'name')->orderBy('name')->get();
+
+        return view('admin.pilgrims.index', compact('pilgrims', 'agents'));
     }
 
     public function create()
@@ -99,5 +135,40 @@ class PilgrimController extends Controller
             ->get();
 
         return view('admin.pilgrims.print-bulk', compact('pilgrims'));
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        $request->validate([
+            'selected_pilgrims' => 'required|array',
+            'selected_pilgrims.*' => 'exists:pilgrims,id',
+        ]);
+
+        $ids = $request->input('selected_pilgrims');
+
+        try {
+            DB::transaction(function () use ($ids) {
+                $pilgrims = Pilgrim::whereIn('id', $ids)->get();
+
+                foreach ($pilgrims as $pilgrim) {
+                    /**
+                     * @var \App\Models\Pilgrim $pilgrim
+                     */
+
+                    if ($pilgrim->photo_path && Storage::disk('public')->exists($pilgrim->photo_path)) {
+                        Storage::disk('public')->delete($pilgrim->photo_path);
+                    }
+
+                    $pilgrim->delete();
+                }
+            });
+
+            return redirect()->route('admin.pilgrims.index')
+                ->with('success', count($ids) . ' Data Jamaah berhasil dihapus.');
+
+        } catch (\Exception $e) {
+            return redirect()->route('admin.pilgrims.index')
+                ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 }

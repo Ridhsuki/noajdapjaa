@@ -37,11 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('partners', PartnerController::class)->names('partners');
         Route::resource('agents', AgentController::class)->names('agents');
-        Route::resource('pilgrims', PilgrimController::class)->names('pilgrims');
+
+        Route::delete('pilgrims/bulk-destroy', [PilgrimController::class, 'bulkDestroy'])
+            ->name('pilgrims.bulk-destroy');
         Route::get('pilgrims/{pilgrim}/print', [PilgrimController::class, 'print'])
             ->name('pilgrims.print');
         Route::post('pilgrims/bulk-print', [PilgrimController::class, 'bulkPrint'])
             ->name('pilgrims.bulk-print');
+        Route::resource('pilgrims', PilgrimController::class)->names('pilgrims');
     });
 });
 
